@@ -1884,6 +1884,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .highlight {
   color: var(--orange-yellow-crayola);
-  font-weight: var(--fw-400);
+  font-weight: var(--fw-300);
+  display: inline; /* 블록 대신 인라인으로 */
 }
 
