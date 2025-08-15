@@ -2,17 +2,17 @@ vCard - Personal Portfolio
 
 # sidebar
 
-alt = Richard hanrick
-Richard hanrick
-Web developer
+alt = Olivia Kuk
+Olivia Kuk
+R&D Researcher
 
 Show Contacts
 
 Email
-richard@example.com
+oliviakuk7@gmail.com
 
 Phone
-+1 (213) 352-2795
++1 (303) 406 - 3313 
 
 Birthday
 June 23, 1982
