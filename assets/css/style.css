@@ -1883,8 +1883,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 
 .highlight {
-  background: var(--bg-gradient-yellow-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: var(--fw-600);
+  color: var(--orange-yellow-crayola);
+  font-weight: var(--fw-400);
 }
+
