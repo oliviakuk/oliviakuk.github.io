@@ -1888,3 +1888,16 @@ textarea.form-input::-webkit-resizer { display: none; }
   display: inline; /* 블록 대신 인라인으로 */
 }
 
+.image-row {
+  display: flex;
+  justify-content: center;  /* 가운데 정렬 */
+  gap: 20px;                /* 두 사진 사이 간격 */
+  margin-top: 1rem;
+  flex-wrap: wrap;          /* 화면이 좁아지면 자동 줄바꿈 */
+}
+
+.method-image {
+  max-width: 40%;           /* 사진 크기 (각각 화면의 40% 정도) */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
