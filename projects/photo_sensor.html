@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> Photo Sensor & Optical Response </title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Your site stylesheet -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">Measuring Optical Responses of Display</h2>
+
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        We built a soldered <span class="highlight">photo-sensor</span> using a photo transistor to measure a monitor’s optical response.
+        By capturing rising and falling waveforms across gray levels, we analyzed step responses and distinguished
+        drive methods—most notably <b>PWM</b> vs <b>PAM</b>.
+      </p>
+
+      <p>
+        <b>My role:</b> sensor fabrication & wiring, oscilloscope data capture, waveform analysis, documentation.
+      </p>
+
+      <ul class="timeline-list">
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Hardware & Tools</h4>
+          <p class="timeline-text">
+            NPN photo transistor (BJT), resistors (6.8k/15k/56k/82kΩ), breadboard/proto board, power supply (5–30V),
+            oscilloscope, shielding (paper cup + tape)
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Method (Brief)</h4>
+          <p class="timeline-text">
+            1) Solder the photo sensor and block ambient light. 2) Attach to the display and feed V<sub>CC</sub>.
+            3) Sweep gray patterns and brightness/contrast. 4) Vary R and V<sub>CC</sub>; record V<sub>out</sub> waveforms.
+            5) Extract rising/falling times; normalize and compare against gamma curves.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Key Findings</h4>
+          <p class="timeline-text">
+            • <b>Drive modes:</b> The test monitor’s waveform width changed with brightness → <b>PWM</b>;
+            the reference monitor scaled amplitude more linearly → <b>PAM</b>.<br/>
+            • <b>Panel behavior:</b> TN/VA panels showed step responses due to dynamic capacitance; IPS minimized them,
+            enabling faster target luminance without “stairs.”<br/>
+            • <b>Resistor choice:</b> For crisp on/off (LED switching), smaller R (≈6.8kΩ) produced steeper edges.
+            For optical luminance tracking vs gamma, <b>56kΩ</b> best matched the curve with minimal saturation.<br/>
+            • <b>Supply choice:</b> Around <b>20V</b> V<sub>CC</sub> gave the closest gamma alignment among the tested values (5–30V).<br/>
+            • <b>Mitigation:</b> Overdrive (briefly overshooting the target voltage) can reduce response time and perceived step artifacts.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Outcome</h4>
+          <p class="timeline-text">
+            We verified step responses across gray levels, quantified rising/falling times, and explained why
+            PWM vs PAM and TN/VA vs IPS produce distinct waveform signatures. This informs sensor setup choices
+            (R, V<sub>CC</sub>) and display tuning (e.g., overdrive LUTs).
+          </p>
+        </li>
+      </ul>
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h4>Project Summary (Short)</h4>
+        <p>
+          We measured a monitor’s response with a hand-built photo sensor, plotted rising/falling waveforms per gray level,
+          and used the data to differentiate <b>PWM</b> vs <b>PAM</b> driving and TN/VA vs IPS panel behavior.
+          We also determined practical sensor settings (resistor & supply) and discussed <b>overdrive</b> as a way
+          to reduce step responses.
+        </p>
+      </section>
+
+  </article>
+</main>
+
+</body>
+</html>
+
