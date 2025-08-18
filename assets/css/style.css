@@ -1927,3 +1927,21 @@ textarea.form-input::-webkit-resizer { display: none; }
   border-radius:16px;
 }
 
+
+/* 고정된 카드 앞으로 보내기 */
+.project-item[data-featured="true"] {
+  order: -1;              /* 맨 앞으로 */
+  border: 2px solid gold; /* (옵션) 고정 강조 표시 */
+  position: relative;
+}
+
+/* (옵션) 고정 마크 스타일 */
+.project-item[data-featured="true"]::before {
+  content: "★";
+  color: gold;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
