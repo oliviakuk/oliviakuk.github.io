@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PM LED Display</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Your site stylesheet -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    .article-title {
+      color: white !important;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">Passive Matrix LED Display</h2>
+
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        This project explored the operation of a <span class="highlight">Passive Matrix LED (PMLED)</span> system driven by an Arduino. 
+        By building the circuit, running diode tests, and programming patterns, we analyzed the relationship between 
+        voltage, current, and luminance, and compared PMLED with Active Matrix LED (AMLED) operation.
+      </p>
+         <div class="image-row">
+           <img src="../assets/images/PM_LED1.jpg" alt="PM_LED1" class="method-image">
+           <img src="../assets/images/PM_LED2.jpg" alt="PM_LED2" class="method-image">
+           </div>
+           </li>
+      <p>
+        <b>My role:</b> circuit setup, diode testing, Arduino coding, data collection, and analysis.
+      </p>
+
+      <ul class="timeline-list">
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Method (Brief)</h4>
+          <p class="timeline-text">
+            Assembled a PMLED with Arduino, ran diode tests, measured V–I–L relations, and coded custom display patterns.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Results</h4>
+          <p class="timeline-text">
+            • Threshold voltages differed by color: V<sub>th</sub>(R) &lt; V<sub>th</sub>(G) &lt; V<sub>th</sub>(B).<br>
+            • Current and luminance both increased proportionally with voltage.<br>
+            • Custom images were successfully displayed with Arduino-driven PMLED.<br>
+            • Frame capture illustrated the effects of refresh rate vs frame rate.
+          </p>
+            <img src="../assets/images/PM_LED3.png" 
+                alt="PM_LED3" 
+                class="about-image">
+
+            <img src="../assets/images/PM_LED4.png" 
+                alt="PM_LED4" 
+                class="about-image">
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Outcome & Discussion</h4>
+          <p class="timeline-text">
+            The experiment deepened our understanding of PMLED operation and its difference from AMLED, where storage capacitors 
+            allow pixel states to persist. We also studied MicroLED as an emerging technology offering superior efficiency and image quality. 
+            Coding with Arduino functions (<code>setup()</code>, <code>loop()</code>, <code>digitalWrite()</code>, <code>for()</code>) 
+            strengthened embedded programming skills, while analyzing refresh and frame rates clarified performance factors in display systems.
+          </p>
+        </li>
+      </ul>
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h4>Project Summary (Short)</h4>
+        <p>
+          Built and tested a PMLED with Arduino, analyzed V–I–L relations, and implemented display patterns. 
+          Compared PM vs AM driving methods and explored MicroLED as a next-generation display.
+        </p>
+      </section>
+
+      <div class="separator"></div>
+
+      <p class="about-text">
+        Demo Videos: 
+        <a class="contact-link" href="https://youtu.be/aHPXJBq6hE0?si=vPm0LTEhAl7QyYhw" target="_blank" rel="noopener">Video 1</a> | 
+        <a class="contact-link" href="https://youtu.be/wjmw2idoSEo?si=LdYMrd_60pjmgLwE" target="_blank" rel="noopener">Video 2</a><br>
+      
+      </p>
+
+      <p class="about-text">
+        <a class="contact-link" href="../index.html">← Back to Home</a>
+      </p>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
