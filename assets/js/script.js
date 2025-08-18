@@ -157,3 +157,40 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+// 프로젝트 리스트와 최초 DOM 순서를 저장
+const projectList = document.querySelector(".project-list");
+const initialOrder = [...projectList.children]; // 복원용
+
+function reorderForAll() {
+  const items = [...projectList.children];
+  const featured = items.filter(li => li.dataset.featured === "true");
+  const others   = items.filter(li => li.dataset.featured !== "true");
+
+  // 재배치: featured 먼저, 그 다음 others
+  projectList.innerHTML = "";
+  featured.forEach(li => projectList.appendChild(li));
+  others.forEach(li => projectList.appendChild(li));
+}
+
+function restoreOrder() {
+  projectList.innerHTML = "";
+  initialOrder.forEach(li => projectList.appendChild(li));
+}
+
+// ⬇️ 기존 필터 적용 지점에서, 선택 키가 'all'이면 재정렬, 아니면 원복
+function applyFilter(selectedKey){
+  const key = (selectedKey || "all").trim().toLowerCase();
+
+  if (key === "all") {
+    reorderForAll();
+  } else {
+    restoreOrder();
+  }
+
+  // 기존에 하던 show/hide 로직 그대로 실행
+  document.querySelectorAll("[data-filter-item]").forEach(item => {
+    const cat = (item.dataset.category || "").trim().toLowerCase();
+    item.classList.toggle("active", key === "all" ? true : cat === key);
+  });
+}
