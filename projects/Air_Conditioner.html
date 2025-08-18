@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Air Conditioner (Arduino AC)</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Site stylesheet -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+   <style>
+    .article-title {
+      color: white !important;
+    }
+  </style>
+  
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">Arduino AC — Automated Fan Controller</h2>
+
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        I built a small <span class="highlight">embedded cooling controller</span> that behaves like a simple air conditioner:
+        it reads temperature/humidity, lets the user set a target on a 7-segment display via a potentiometer, and turns a fan on
+        when the measured temperature exceeds the setpoint. I did this project solo <span class="highlight"> to deepen my embedded systems skills. </span> 
+      </p>
+
+    
+      <img src="../assets/images/aircon-final.png" alt="Arduino AC final build" class="about-image"> -->
+
+      <p><b>My role:</b> end-to-end design & implementation — hardware wiring, scheduler integration, device drivers, UI logic, and documentation.</p>
+
+      <ul class="timeline-list">
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">System Overview</h4>
+          <p class="timeline-text">
+            MCU: Arduino (AVR) • Preemptive task scheduling with <b>FreeRTOS</b> • Inputs: Potentiometer (setpoint), Temp/Humidity sensor •
+            Outputs: 7-segment LED display (target value), DC fan (via driver/transistor) • On-board timers for periodic sensing & UI refresh.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Method (Brief)</h4>
+          <p class="timeline-text">
+            Implemented <span class="highlight">FreeRTOS </span> tasks for sensing, UI update, and fan control; read the hardware specs to configure timers, multiplex the 7-segment display, and debounce user input.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Interactability</h4>
+          <p class="timeline-text">
+            The user turns a potentiometer to set a target temperature shown on the 7-segment display.
+            If <i>T<sub>measured</sub> ≥ T<sub>set</sub></i>, the controller signals the fan to activate; otherwise it remains off.
+          </p>
+         <video autoplay muted loop playsinline width="640">
+             <source src="../assets/videos/demo.mp4" type="video/mp4">
+             Your browser does not support the video tag.
+          </video>
+
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Implementation Notes</h4>
+          <p class="timeline-text">
+            • Learned and used AVR timer hardware for stable task periods and display refresh.<br>
+            • Mapped 7-segment pinouts and multiplexed digits to reduce I/O usage.<br>
+            • Wrote lightweight drivers for the sensor and display to fit tight memory.<br>
+            • Tuned stack/heap and task priorities to keep UI responsive near memory limits.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Outcome & Discussion</h4>
+          <p class="timeline-text">
+            The prototype reliably cools when the sensed temperature crosses the user-defined threshold, demonstrating end-to-end
+            embedded control with scheduling, real-time I/O, and a minimal UI. The build nearly maxed out available Arduino memory,
+            which helped me understand practical limits (RAM/flash, timing jitter, and I/O bandwidth). Next steps include adding
+            hysteresis to prevent fan chatter, logging via UART, and migrating to a more capable MCU for richer UI or PID control.
+          </p>
+        </li>
+
+      </ul>
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h4>Project Summary (Short)</h4>
+        <p>
+          Solo project: a FreeRTOS-based Arduino fan controller that lets users set a temperature on a 7-segment display and
+          automatically switches the fan when the measured value exceeds the setpoint. Pushed Arduino close to memory limits,
+          solidifying my embedded fundamentals.
+        </p>
+      </section>
+
+      <div class="separator"></div>
+
+      <p class="about-text">
+        Code & Report:
+        <a class="contact-link" href="https://github.com/oliviakuk/ECE-projects" target="_blank" rel="noopener">Code</a>
+      </p>
+
+      <p class="about-text">
+        <a class="contact-link" href="../index.html">← Back to Home</a>
+      </p>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
