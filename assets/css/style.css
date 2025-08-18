@@ -1901,3 +1901,11 @@ textarea.form-input::-webkit-resizer { display: none; }
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
+
+.about-image {
+  display: block;          /* 블록 요소 → 줄바꿈됨 */
+  margin: 1.5rem auto;     /* 위아래 간격 + 가운데 정렬 */
+  max-width: 70%;          /* 반응형 크기 제한 */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
