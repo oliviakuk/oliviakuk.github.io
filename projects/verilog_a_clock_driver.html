@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Verilog-A Clock Driver — Design & Debugging</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">Verilog-A Clocking Signal Driver</h2>
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        I designed a reusable <span class="highlight">Verilog-A clock/pulse driver</span> for RRAM array experiments,
+        integrated it with <b>SmartSpice</b> via Gateway, and documented key
+        <b>troubleshooting & debugging</b> steps (imports, control-file linkage, symbolization).
+      </p>
+
+      <ul class="timeline-list">
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Goal</h4>
+          <p class="timeline-text">
+            Generate clean, parameterized square waves (V<sub>H</sub>, V<sub>L</sub>, freq, duty) to drive WL/BL/SL and stop or adapt based on measured conductance.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Method (Brief)</h4>
+          <p class="timeline-text">
+            Verilog-A clock block → Gateway import/embedding → SmartSpice control-file binding → symbol hookup → waveform verify (SmartView) & console debug.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Design Highlights</h4>
+          <p class="timeline-text">
+            • Duty-cycle–based clocking; fixed magnitude/width options for sweeps.<br>
+            • <code>@timer</code>-style scheduling and transient timing control for repeatable toggles.<br>
+            • PWL fallback for corner cases; parameter guards to avoid meta-stability.<br>
+            • “Stop-on-target” logic (write/verify loop ready) when conductance meets threshold.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">EDA Integration (Gateway & SmartSpice)</h4>
+          <p class="timeline-text">
+            • Verilog-A import paths tried as: (1) direct import (symbol), (2) embedded definition, (3) control-file (<code>.ctr</code>) include.<br>
+            • Early attempt of method (3): output voltage not observable → fixed by netlisting order and symbol pin-mapping; method (2) proved most robust in large arrays.<br>
+            • Common pitfalls: <code>.include</code>/<code>.verilog</code>/<code>.hdl</code> header mix-ups, library scope, and control-file search paths.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Troubleshooting Checklist</h4>
+          <p class="timeline-text">
+            1) Ensure <code>.va</code> compiled before symbol instantiation; 2) verify pin order and units; 3) set initial conditions to avoid DC-op traps; 4) confirm
+            viewer probes on the driver output node; 5) when duty&lt;→write time matters, sweep duty first (frequency often secondary within the safe V<sub>write</sub> window).
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Results</h4>
+          <p class="timeline-text">
+            • Clean 50–80% duty clocks for WL/BL/SL; stable toggling across PVT corners.<br>
+            • Resolved “no-output” cases and reduced bring-up time; ready for write-verify automation.<br>
+            • Scales to large arrays when embedded; control-file method works with corrected includes.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Next</h4>
+          <p class="timeline-text">
+            • Add programmable burst/idle patterns; • expose API for testbenches; • ship as a lab “clock IP” cell.
+          </p>
+        </li>
+      </ul>
+
+      <div class="separator"></div>
+
+      <p class="about-text">
+        <b>Tech Stack:</b> SmartSpice (Silvaco), Gateway, Verilog-A, PWL, SmartView<br>
+        <b>Links:</b> <a class="contact-link" href="../index.html">← Back to Home</a>
+      </p>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
