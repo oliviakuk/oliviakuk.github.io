@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>Verilog-A Clock Driver — Design & Debugging</title>
+  <style>
+    .article-title {
+      color: white !important;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,9 +25,12 @@
 
     <section class="about-text">
       <p>
-        I designed a reusable <span class="highlight">Verilog-A clock/pulse driver</span> for RRAM array experiments,
+        I designed a reusable <span class="highlight">Verilog-A clock/pulse driver</span> for RRAM array for AI semiconductor research,
         integrated it with <b>SmartSpice</b> via Gateway, and documented key
-        <b>troubleshooting & debugging</b> steps (imports, control-file linkage, symbolization).
+        <b>troubleshooting & debugging</b> steps (imports, control-file linkage, symbolization). <br>
+          <img src="../assets/images/semicon_logo.png" alt="logo" class="method-image">
+          <img src="../assets/images/va_embed.png" alt="va_embed" class="method-image">
+
       </p>
 
       <ul class="timeline-list">
@@ -44,7 +52,12 @@
           <h4 class="timeline-item-title">Design Highlights</h4>
           <p class="timeline-text">
             • Duty-cycle–based clocking; fixed magnitude/width options for sweeps.<br>
+            <div class="image-row">
+           <img src="../assets/images/duty1.png" alt="PM_LED1" class="method-image">
+           <img src="../assets/images/duty2.png" alt="PM_LED2" class="method-image">
+           </div>
             • <code>@timer</code>-style scheduling and transient timing control for repeatable toggles.<br>
+           <img src="../assets/images/clock_code.png" alt="PM_LED1" class="method-image">
             • PWL fallback for corner cases; parameter guards to avoid meta-stability.<br>
             • “Stop-on-target” logic (write/verify loop ready) when conductance meets threshold.
           </p>
