@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AI-Ready Memory Circuits — Design · Integration · Results (AICT Internship)</title>
+  <style>
+    .article-title {
+      color: white !important;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title"> AI-Ready Next-Gen Memory Circuits (Neuromophic ReRAM CBA)</h2>
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        During my research TA at <b>Korea University</b>, the research team built and integrated a simulation-accurate RRAM
+        cross-bar (CBA) circuit stack for AI workloads: compact parasitics, Verilog-A behavior models,
+        array partitioning, and <b>off-chip learning</b> hooks for SLP/MLP experiments.
+      </p>
+       <div class="image-row">
+           <img src="../assets/images/goal.png" alt="PM_LED1" class="method-image">
+           <img src="../assets/images/goal2.png" alt="PM_LED2" class="method-image">
+         <p>
+           LeNet-5 for MNIST and a heterogeneous CPU–IMAC in-memory analog computing architecture.
+         </p>
+      </div>
+      
+      <ul class="timeline-list">
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Scope</h4>
+          <p class="timeline-text">
+            Scalable <b>4×4 1T1R</b> to <b>120x84x10 </b> Multi-Layer Perceptron (MLP) arrays, WL/BL/SL routing, and IMAC-style subarray generation.
+            Included resistive/capacitive parasitics and measured their impact on I–V / I–t / V–t behavior.
+          </p>
+           <div class="image-row">
+           <img src="../assets/images/semicon1.png" alt="PM_LED1" class="method-image">
+           <img src="../assets/images/semicon2.png" alt="PM_LED2" class="method-image">
+           </div>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Method (Brief)</h4>
+          <p class="timeline-text">
+            Build compact CBA + neuron blocks → integrate Verilog-A device/clock models → include line parasitics →
+            connect off-chip training (weights → conductance) → run SPICE batches and analyze accuracy/latency trade-offs.
+          </p>
+          <div class="image-row">
+           <img src="../assets/images/cba1.png" alt="PM_LED1" class="method-image">
+           <img src="../assets/images/cba2.png" alt="PM_LED2" class="method-image">
+           </div>
+
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">System & Integration</h4>
+          <p class="timeline-text">
+            • Parasitic modeling: word/bit-line R/C extraction → compact inclusion in netlist.<br>
+            • Array scaling: verified 4×4 1T1R; profiled 64×64 with/without parasitics; optimized netlisting flow for runtime.<br>
+            • Learning loop: off-chip SLP/MLP → weight mapping → target conductance; IMAC subarray builder for connectivity.<br>
+            • Driver blocks: Verilog-A clock/pulse for write-verify; stop-on-target conductance; duty-cycle sweep utility.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Outcome & Discussion</h4>
+          <p class="timeline-text">
+            • <b>Accuracy vs. Parasitics:</b> Captured series-resistance and cap-loading effects across I–V and time-domain curves,
+            informing routing/partition plans.<br>
+            • <b>Programming Dynamics:</b> Within the safe V<sub>write</sub> region, write time is far more sensitive to pulse amplitude and
+            duty than frequency, matching DMM-based guidance; frequency-induced threshold shifts still bound the valid window.<br>
+            • <b>Neuromorphic Relevance:</b> The flow aligns with memristor models showing gradual LTP/LTD and volatile behaviors
+            (IGZO/SnOx) that enable low-power learning and even reservoir computing.<br>
+            • <b>Scaling Readiness:</b> Embedded Verilog-A plus partitioned arrays gave stable convergence and tractable runtime for large CBAs.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Tech Stack</h4>
+          <p class="timeline-text">
+            SmartSpice, Gateway, Verilog-A, MATLAB/Python (weight mapping), custom netlist generators.
+          </p>
+        </li>
+      </ul>
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h3 class="h3">References</h3>
+        <p class="timeline-text">
+          • Aguirre et al., “SPICE Simulation of RRAM-Based Cross-Point Arrays Using the Dynamic Memdiode Model,” Frontiers in Physics (2021).<br>
+          • Lee et al., “IGZO/SnOx-based dynamic memristor with fading memory effect for reservoir computing,” J. Chem. Phys. (2023).
+        </p>
+        <p class="about-text">
+          <a class="contact-link" href="../index.html">← Back to Home</a>
+        </p>
+      </section>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
