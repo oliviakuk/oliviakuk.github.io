@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TFT Reverse Engineering — Galaxy Z Flip</title>
+
+  <!-- Site stylesheet (keep your existing path) -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Required: make the title white (as requested) -->
+  <style>
+    .article-title {
+      color: white !important;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">TFT Reverse Engineering — Galaxy Z Flip(7T1C)</h2>
+
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        A hands-on reverse engineering study of the Galaxy Z Flip display module. We disassembled the device, inspected frontplane/backplane structures under an optical microscope, measured sub-pixel geometry, traced driver routing, and analyzed timing—then discussed encapsulation, touch sensing, hinge region, and foldable-specific reliability.
+      </p>
+
+      <p><b>My role:</b> full teardown, microscopy, measurement & analysis, circuit tracing, documentation.</p>
+
+      <div class="image-row">
+            <img src="../assets/images/zflip-teardown.png" alt="Photo sensor setup 1" class="method-image">
+           <img src="../assets/images/spec.png" alt="Photo sensor setup 2" class="method-image">
+         </div>
+      
+     spe
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Tools</h4>
+          <p class="timeline-text">
+            Optical microscope, probe station, oscilloscope, loupe, utility knife, screwdriver, cleanroom tools, protective gloves.
+            
+          </p>
+        </li>
+
+ 
+
+        <!-- Frontplane -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Frontplane Findings (OLED)</h4>
+          <p class="timeline-text">
+            <b>Cover display:</b> S-stripe RGB sub-pixel layout; blue sub-pixel vertically elongated with the largest aperture to mitigate power/aging. One-pixel combined aperture ≈ 31.59%. <!-- Add image if you have -->
+          </p>
+          <img src="../assets/images/cover-oled.jpg" alt="Cover OLED frontplane" class="about-image"> 
+          
+          <p class="timeline-text">
+            <b>Main display:</b> diamond-type RGBG (Pentile-like) arrangement for high PPI; green counted twice in area/aperture accounting; blue remains largest aperture among RGB.
+          </p>
+        </li>
+
+        <!-- Backplane -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Backplane & Drivers</h4>
+          <p class="timeline-text">
+            Symmetric <b>Scan</b> and <b>EM</b> drivers placed on both sides to shorten line length and reduce RC delay. Bottom side carries ELVDD, De-MUX and data lines. The cover display employs a <b>1:6 DeMux</b> to reduce data lines; ESD protection taps into the data bus near DeMux. Sub-pixel is a 7T1C-type; per-TFT roles mapped from microscope images.
+          </p>
+          <img src="../assets/images/backplane.jpg" alt="Backplane mapping" class="about-image">
+          <div class="image-row">
+            <img src="../assets/images/scan.png" alt="Photo sensor setup 1" class="method-image">
+           <img src="../assets/images/em.png" alt="Photo sensor setup 2" class="method-image">
+         </div>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Measurements & PPI</h4>
+          <p class="timeline-text">
+            Sub-pixel and capacitor dimensions extracted from microscope images (cover/main). Using backplane geometry, the device PPI was estimated at <b>≈ 431 ppi</b>.
+            
+           <div class="image-row">
+            <img src="../assets/images/tr.png" alt="Photo sensor setup 1" class="method-image">
+           <img src="../assets/images/pixel.png" alt="Photo sensor setup 2" class="method-image">
+         </div>
+          
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Timing Diagrams</h4>
+          <p class="timeline-text">
+            Cover/main timing traced from driver outputs and EM coupling to adjacent pixel rows (n, n+1); diagrams reflect EM/scan sequencing consistent with symmetric driver placement.
+          </p>
+          <img src="../assets/images/timing.jpg" alt="Cover OLED frontplane" class="about-image"> im
+        </li>
+
+        <!-- Discussion -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Discussion — Signal Integrity & Layout</h4>
+          <p class="timeline-text">
+            <b>(1)</b> Symmetric Scan/EM drivers halve line length → lower RC delay and brightness drop along rows.<br>
+            <b>(2)</b> Intentional capacitors between data and ELVDD assist delay compensation and tau matching.<br>
+            <b>(3)</b> Staggered data-line routing near edges/punch-hole reduces distortion and supports higher PPI.
+          </p>
+          <img src="../assets/images/staggerd.jpg" alt="Data-ELVDD overlap caps" class="about-image">
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Punch-Hole & Hinge Region</h4>
+          <p class="timeline-text">
+            Around the camera punch hole, lines are rerouted/stepped; certain EM/Scan/ELVDD segments are interrupted for stability. Hinge-area backplane shows no dramatic geometry change in this early Z Flip generation; later models likely refine stack/mechanics.
+          </p>
+        </li>
+
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">LTPS in Foldables — Reliability Notes</h4>
+          <p class="timeline-text">
+            Poly-Si TFTs can suffer from strain-induced trap states at grain boundaries (mobility/Vth shifts) under bending. Mitigations include improved gate-insulator processes, curved-type active-layer designs, and aligning TFTs with the <b>neutral plane</b> to minimize mechanical stress.
+          </p>
+        </li>
+      
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h4>Project Summary (Short)</h4>
+        <p>
+          Reverse-engineered Z Flip displays: quantified sub-pixel/aperture and PPI, mapped 7T1C backplane and symmetric drivers with 1:6 DeMux, confirmed on-cell touch (Y-OCTA) and TFE, and discussed routing/encapsulation choices and foldable reliability.
+        </p>
+        <div class="image-row">
+            <img src="../assets/images/mapping.png" alt="Photo sensor setup 1" class="method-image">
+           <img src="../assets/images/pixel.png" alt="Photo sensor setup 2" class="method-image">
+         </div>
+
+      </section>
+
+      <div class="separator"></div>
+
+      <p class="about-text">
+        <a class="contact-link" href="../index.html">← Back to Home</a>
+      </p>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
