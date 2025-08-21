@@ -44,7 +44,7 @@
 
       </p>
 
-       <img src="../assets/images/hud_logo" alt="HUD software-only stack" class="about-image">
+       <img src="../assets/images/hud_logo.png" alt="HUD software-only stack" class="about-image">
 
       <p><b>Role:</b> end-to-end software implementation — scene/data simulators, calibration, blending/tonemapping, shader pipeline, QA tools.</p>
 
@@ -71,7 +71,7 @@
             <b>3) Calibration:</b> virtual checkerboards → homography (plane mapping) + radial/tangential distortion fit → pre-warp map.<br>
             <b>4) Renderer:</b> FBO → GLSL warp (barrel/tangential) → <b>local dimming map</b> → <b>alpha blending</b> → composited output.
           </p>
-          <img src="../assets/images/camera_rendering" alt="HUD software-only stack" class="about-image">
+          <img src="../assets/images/camera_rendering.png" alt="HUD software-only stack" class="about-image">
         </li>
 
         <!-- Local Dimming -->
@@ -91,7 +91,7 @@
           </p>
           <div class="image-row">
             <img src="../assets/images/hud_code1.png" alt="Photo sensor setup 1" class="method-image">
-           <img src="../assets/images/hud_code2.jpg" alt="Photo sensor setup 2" class="method-image">
+           <img src="../assets/images/hud_code2.png" alt="Photo sensor setup 2" class="method-image">
          </div>
         </li>
 
@@ -119,7 +119,7 @@
             After local dimming and blending, we apply the inverse (linear→sRGB) and an optional display LUT for
             gamma/contrast trims. This prevents “double gamma” artifacts and keeps small text legible.
           </p>
-          <img src="../assets/images/hud_hero" alt="HUD software-only stack" class="about-image">
+          <img src="../assets/images/hud_hero.png" alt="HUD software-only stack" class="about-image">
         </li>
        
 
@@ -139,12 +139,11 @@
           <p class="timeline-text">
             Add a local demo video below (use <code>.mp4</code> for best compatibility; you may include a <code>.mov</code> fallback).
           </p>
-          <!--
           <video autoplay muted loop playsinline controls style="display:block; margin:1rem auto; max-width:900px; width:100%;">
             <source src="../assets/videos/demo_car.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          -->
+       
         </li>
       </ul>
 
