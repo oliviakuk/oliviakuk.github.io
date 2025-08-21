@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Head-Up Display — Software-Only (Local Dimming & Blending)</title>
+
+  <!-- Site stylesheet -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Required: title must be white; links use site highlight color -->
+  <style>
+    .article-title { color: white !important; }
+    a { color: var(--orange-yellow-crayola); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .about-image { display:block; margin:1rem auto; max-width:900px; width:100%; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+    .image-row { display:flex; justify-content:center; gap:20px; margin:20px 0; flex-wrap:wrap; }
+    .image-row img { width:280px; height:auto; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+    .code-badge { display:inline-block; padding:.25rem .5rem; border:1px solid rgba(255,255,255,.15); border-radius:6px; margin-right:.35rem; font-size:.85rem; }
+    code.inline { background:rgba(255,255,255,.06); padding:.05rem .35rem; border-radius:4px; }
+  </style>
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">Automotive Head-Up Display — Software-Only System</h2>
+
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+          Implemented a software-only HUD: synthetic signals, calibration (homography + distortion), GLSL pre-warp, and a tiled
+          <b>local dimming</b> algorithm with <b>alpha blending</b> in linear space.
+        No physical sensors (camera/IMU) or vehicle bus were used; all signals and optics effects were simulated in software.
+      </p>
+
+       <img src="../assets/images/hud_logo" alt="HUD software-only stack" class="about-image">
+
+      <p><b>Role:</b> end-to-end software implementation — scene/data simulators, calibration, blending/tonemapping, shader pipeline, QA tools.</p>
+
+      <ul class="timeline-list">
+
+        <!-- Tech Stack -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Tech Stack</h4>
+          <p class="timeline-text">
+            <span class="code-badge">C#/C++</span>
+            <span class="code-badge">HSML</span>
+            <span class="code-badge">OpenGL/GLSL</span>
+            <span class="code-badge">OpenCV (simulation)</span>
+            <span class="code-badge">Git</span>
+          </p>
+        </li>
+
+        <!-- Software Architecture -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Software Architecture</h4>
+          <p class="timeline-text">
+            <b>1) Synthetic Data:</b> speed/turn/alerts are procedurally generated with noise & timing jitter for repeatable tests.<br>
+            <b>2) Scene Graph:</b> HUD widgets (speed, turn cues, warnings) with Z-ordering and timeline states.<br>
+            <b>3) Calibration:</b> virtual checkerboards → homography (plane mapping) + radial/tangential distortion fit → pre-warp map.<br>
+            <b>4) Renderer:</b> FBO → GLSL warp (barrel/tangential) → <b>local dimming map</b> → <b>alpha blending</b> → composited output.
+          </p>
+          <img src="../assets/images/camera_rendering" alt="HUD software-only stack" class="about-image">
+        </li>
+
+        <!-- Local Dimming -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Local Dimming Algorithm (Software)</h4>
+          <p class="timeline-text">
+            We implemented a <b>software local dimming</b> stage to enhance contrast and readability of HUD graphics over varying backgrounds.
+            The frame is split into tiles; for each tile we estimate the background luminance and drive a per-tile backlight factor.
+            To avoid halos and flicker, we applied spatial/temporal smoothing and brightness clamps.
+          </p>
+          <p class="timeline-text">
+            <b>Pipeline:</b> linearize (γ⁻¹) → downsample → per-tile luminance <code class="inline">L_bg</code> (max/percentile/mean) →
+            smooth (Gaussian + EMA) → compute backlight <code class="inline">B = clamp( a·L_bg + b )</code> → upsample → modulate foreground.
+          </p>
+          <p class="timeline-text">
+            <b>Key details:</b> linear domain for all math; a/b from calibration; EMA hysteresis for stability; guard bands near UI glyphs to protect edges.
+          </p>
+          <div class="image-row">
+            <img src="../assets/images/hud_code1.png" alt="Photo sensor setup 1" class="method-image">
+           <img src="../assets/images/hud_code2.jpg" alt="Photo sensor setup 2" class="method-image">
+         </div>
+        </li>
+
+        <!-- Alpha Blending -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Alpha Blending & Compositing</h4>
+          <p class="timeline-text">
+            HUD glyphs and widgets are composited using <b>premultiplied alpha</b> in the <b>linear</b> color space:
+            <code class="inline">C_out = C_fg + (1 - α_fg) · C_bg</code>.
+            We generate foreground in SDF (signed-distance-field) for crisp scalable text, convert sRGB→linear before blending,
+            then linear→sRGB at the end. Alpha ramps (ease-in/out) are used for readable transitions without flicker.
+          </p>
+          <p class="timeline-text">
+            To preserve contrast after local dimming, the foreground intensity is re-normalized by the per-tile backlight factor
+            while keeping <code class="inline">α</code> consistent, avoiding washed-out edges.
+          </p>
+        </li>
+
+        <!-- Linear/Gamma -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Linear / Gamma Handling</h4>
+          <p class="timeline-text">
+            All tone and blend math run in linear space:
+            <code class="inline">C_lin = (C_srgb)^{γ}</code>, with <code class="inline">γ≈2.2</code>.
+            After local dimming and blending, we apply the inverse (linear→sRGB) and an optional display LUT for
+            gamma/contrast trims. This prevents “double gamma” artifacts and keeps small text legible.
+          </p>
+          <img src="../assets/images/hud_hero" alt="HUD software-only stack" class="about-image">
+        </li>
+       
+
+        <!-- Challenges -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Key Challenges & Debugging</h4>
+          <p class="timeline-text">
+            • <b>Haloing near glyphs:</b> reduced tile size around HUD UI; added edge guards and alpha-aware normalization.<br>
+            • <b>Banding in low luminance:</b> dithered LUT + slight noise before γ; improved gradient smoothness.<br>
+            • <b>Shear in warp grid:</b> fixed vertex stride/UV normalization; removed geometric artifacts in pre-warp.
+          </p>
+        </li>
+
+        <!-- Demo -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Demo & Optimization</h4>
+          <p class="timeline-text">
+            Add a local demo video below (use <code>.mp4</code> for best compatibility; you may include a <code>.mov</code> fallback).
+          </p>
+          <!--
+          <video autoplay muted loop playsinline controls style="display:block; margin:1rem auto; max-width:900px; width:100%;">
+            <source src="../assets/videos/demo_car.mp4" type="video/mp4">
+            <source src="../assets/videos/demo_opti.mov" type="video/quicktime">
+            Your browser does not support the video tag.
+          </video>
+          -->
+        </li>
+      </ul>
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h4>Project Summary (Short)</h4>
+        <p>
+          Implemented a software-only HUD: synthetic signals, calibration (homography + distortion), GLSL pre-warp, and a tiled
+          <b>local dimming</b> algorithm with <b>alpha blending</b> in linear space. The pipeline maintains readability and contrast
+          without any physical sensors or CAN data, strictly following the report’s scope and constraints.
+        </p>
+      </section>
+
+      <div class="separator"></div>
+
+      <p class="about-text">
+        <b>Code:</b> <a href="https://github.com/yourusername/hud" target="_blank" rel="noopener">GitHub Repository</a><br>
+        <a class="contact-link" href="../index.html">← Back to Home</a>
+      </p>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
