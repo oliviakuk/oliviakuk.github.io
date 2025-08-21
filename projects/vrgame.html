@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VR Game — Clay In The Ruins</title>
+
+  <!-- Site stylesheet -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Title must be white -->
+  <style>
+    .article-title { color: white !important; }
+  </style>
+</head>
+<body>
+
+<main>
+  <article class="active">
+    <h2 class="article-title">Clay In The Ruins — VR Game Build </h2>
+
+    <div class="separator"></div>
+
+    <section class="about-text">
+      <p>
+        <span class="highlight">Clay In The Ruins</span> is a Unity-based VR clay-shooting game designed for immersion and focus.
+        Set over dark waters with fog and selective lighting, players use VR controllers to load, aim, and shoot clay targets
+        through short play sequences and adjustable difficulty modes. The project emphasizes user-friendly UI, reduced VR sickness,
+        and smooth interaction on Meta Quest–class devices.
+      </p>
+
+    
+      <img src="../assets/images/vrgame-hero.jpg" alt="Clay In The Ruins overview" class="about-image"> 
+      
+      <p><b>Responsibilities:</b> gameplay design, controller interaction, UI canvases, effects & audio, C# scripting, optimization, documentation.</p>
+
+      <ul class="timeline-list">
+
+        <!-- Motivation / Goals -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Motivation & Goals</h4>
+          <p class="timeline-text">
+            • <b>Immersion:</b> present a distinct VR mood (dark ruins + water) rather than typical outdoor ranges.<br>
+            • <b>Focus:</b> visuals, audio, and level pacing tuned for target concentration and flow.<br>
+            • <b>Comfort:</b> 60-second sessions and limited locomotion to reduce VR sickness while keeping play vibrant.
+          </p>
+          <!-- <img src="../assets/images/vrgame-scene.jpg" alt="Ruins scene with water & fog" class="about-image"> -->
+        </li>
+
+        <!-- Components -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Game Components</h4>
+          <p class="timeline-text">
+            <b>Background:</b> player platform over water, fog volume, targeted light sources for contrast and guidance.<br>
+            <b>Player/Device:</b> OpenXR + Meta XR Core SDK + Meta XR Simulator; verified interactions with Meta Quest controllers.<br>
+            <b>UI & Effects:</b> three world-space canvases (start, difficulty, status/score). Ambient water sound, launch warning,
+            reload/shot SFX, and light cues to aid learnability and immersion.
+          </p>
+          <!-- <img src="../assets/images/vrgame-ui.jpg" alt="VR UI Canvases" class="about-image"> -->
+        </li>
+
+        <!-- Method -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Method (Brief)</h4>
+          <p class="timeline-text">
+            Environment build → controller mapping & interaction checks → UI flow & difficulty presets →
+            launcher/randomization → timing & scoring → optimization for comfort and stability.
+          </p>
+        </li>
+
+        <!-- Core Scripts -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Essential C# Scripts</h4>
+          <p class="timeline-text">
+            <b>CanvasManager.cs:</b> handles screen transitions (start → difficulty → gameplay) and restart loop.<br>
+            <b>LevelManager.cs:</b> enables preset launchers (Easy/Normal) with randomized spawn, warning delay, and trajectories.<br>
+            <b>GameTimer.cs:</b> 60-second countdown; real-time updates for time, ammo, and score on the HUD.<br>
+            <b>OnHit & Launchers:</b> collision/physics tuning for fast clays; cleanup of off-scene targets to keep perf smooth.
+          </p>
+          <!-- <img src="../assets/images/vrgame-scripts.jpg" alt="Core scripts overview" class="about-image"> -->
+        </li>
+
+        <!-- Controls -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Controls</h4>
+          <p class="timeline-text">
+            Meta Quest controllers with trigger-based shooting and button-based actions (e.g., reload/confirm).
+            Inputs were validated via Meta XR Simulator during development and on hardware in final checks.
+          </p>
+        </li>
+
+        <!-- Design Notes -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Design Notes & Optimization</h4>
+          <p class="timeline-text">
+            • Volumetric-like flashlight effect approximated with a cone mesh + spotlight for performance (no true volumetrics).<br>
+            • Minimal assets, selective colliders, and off-screen auto-despawn reduce CPU/GPU load and bugs.<br>
+            • Two difficulty modes (Easy, Normal) alter spawn randomness and audio delay cues to shape challenge curves.
+          </p>
+        </li>
+
+        <!-- Assessment -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Assessment</h4>
+          <p class="timeline-text">
+            <b>Completeness:</b> intuitive UI (3 canvases), simple controls, short rounds (60s), and clear feedback loops.<br>
+            <b>Creativity & Challenge:</b> distinct setting and interaction flow; physics, hit logic, and “cone light” trick for clarity and performance.<br>
+            <b>Suitability for VR:</b> 360° audio/visual cues and controlled locomotion make VR usage superior to desktop play.
+          </p>
+        </li>
+
+        <!-- Demo (optional local video) -->
+        <li class="timeline-item">
+          <h4 class="timeline-item-title">Demo</h4>
+          <p class="timeline-text">
+            Add a local demo video below. Use <code>.mp4</code> for best compatibility; you can also include a <code>.mov</code> fallback.
+          </p>
+          <!-- Local video example (autoplay muted loop inline) -->
+          <!--
+          <video autoplay muted loop playsinline controls style="display:block; margin:1rem auto; max-width:800px; width:100%;">
+            <source src="../assets/videos/vrgame-demo.mp4" type="video/mp4">
+            <source src="../assets/videos/vrgame-demo.mov" type="video/quicktime">
+            Your browser does not support the video tag.
+          </video>
+          -->
+        </li>
+      </ul>
+
+      <div class="separator"></div>
+
+      <section class="about-text">
+        <h4>Project Summary (Short)</h4>
+        <p>
+          Unity VR clay-shooting game focused on immersion and comfort. Built with OpenXR and Meta XR SDK, it delivers short,
+          replayable sessions with clean UI, audio cues, and optimized visuals/effects for smooth play on Meta Quest–class headsets.
+        </p>
+      </section>
+
+      <div class="separator"></div>
+
+      <p class="about-text">
+        <b>Tech Stack:</b> Unity, C#, OpenXR, Meta XR Core SDK, Meta XR Simulator<br>
+        <a class="contact-link" href="../index.html">← Back to Home</a>
+      </p>
+    </section>
+  </article>
+</main>
+
+</body>
+</html>
